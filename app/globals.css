@@ -137,3 +137,7 @@ html {
   animation: pulse 4s ease-in-out infinite;
 }
 
+.cursor-dot {
+  mix-blend-mode: difference;
+}
+

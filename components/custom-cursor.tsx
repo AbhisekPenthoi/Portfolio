@@ -1,7 +1,7 @@
 "use client"
 
-import { useState, useEffect } from "react"
-import { motion } from "framer-motion"
+import { useEffect, useState } from "react"
+import { motion, Variants } from "framer-motion"
 
 export function CustomCursor() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
@@ -15,59 +15,67 @@ export function CustomCursor() {
       })
     }
 
-    const mouseDown = () => setCursorVariant("click")
-    const mouseUp = () => setCursorVariant("default")
-
-    const handleLinkHover = () => setCursorVariant("hover")
-    const handleLinkLeave = () => setCursorVariant("default")
-
     window.addEventListener("mousemove", mouseMove)
-    window.addEventListener("mousedown", mouseDown)
-    window.addEventListener("mouseup", mouseUp)
-
-    const links = document.querySelectorAll("a, button")
-    links.forEach((link) => {
-      link.addEventListener("mouseenter", handleLinkHover)
-      link.addEventListener("mouseleave", handleLinkLeave)
-    })
 
     return () => {
       window.removeEventListener("mousemove", mouseMove)
-      window.removeEventListener("mousedown", mouseDown)
-      window.removeEventListener("mouseup", mouseUp)
-
-      links.forEach((link) => {
-        link.removeEventListener("mouseenter", handleLinkHover)
-        link.removeEventListener("mouseleave", handleLinkLeave)
-      })
     }
   }, [])
 
-  const variants = {
+  useEffect(() => {
+    const handleMouseDown = () => setCursorVariant("click")
+    const handleMouseUp = () => setCursorVariant("default")
+    const handleMouseEnter = () => setCursorVariant("hover")
+    const handleMouseLeave = () => setCursorVariant("default")
+
+    // Add hover effect to clickable elements
+    const clickableElements = document.querySelectorAll('a, button, input, select, textarea, [role="button"]')
+    
+    clickableElements.forEach((element) => {
+      element.addEventListener("mouseenter", handleMouseEnter)
+      element.addEventListener("mouseleave", handleMouseLeave)
+    })
+
+    // Add click animation
+    window.addEventListener("mousedown", handleMouseDown)
+    window.addEventListener("mouseup", handleMouseUp)
+
+    return () => {
+      clickableElements.forEach((element) => {
+        element.removeEventListener("mouseenter", handleMouseEnter)
+        element.removeEventListener("mouseleave", handleMouseLeave)
+      })
+
+      window.removeEventListener("mousedown", handleMouseDown)
+      window.removeEventListener("mouseup", handleMouseUp)
+    }
+  }, [])
+
+  const variants: Variants = {
     default: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      height: 32,
-      width: 32,
-      backgroundColor: "rgba(0, 255, 157, 0.2)",
-      border: "2px solid rgba(0, 255, 157, 0.5)",
+      x: mousePosition.x - 5,
+      y: mousePosition.y - 5,
+      height: 10,
+      width: 10,
+      backgroundColor: "rgb(255, 255, 255)",
+      border: "2px solid rgb(255, 255, 255)",
     },
     hover: {
-      x: mousePosition.x - 24,
-      y: mousePosition.y - 24,
-      height: 48,
-      width: 48,
-      backgroundColor: "rgba(255, 51, 102, 0.2)",
-      border: "2px solid rgba(255, 51, 102, 0.5)",
-      mixBlendMode: "difference",
+      x: mousePosition.x - 15,
+      y: mousePosition.y - 15,
+      height: 30,
+      width: 30,
+      backgroundColor: "transparent",
+      border: "2px solid rgb(255, 255, 255)",
+      opacity: 0.8
     },
     click: {
-      x: mousePosition.x - 16,
-      y: mousePosition.y - 16,
-      height: 32,
-      width: 32,
-      backgroundColor: "rgba(255, 51, 102, 0.4)",
-      border: "2px solid rgba(255, 51, 102, 0.8)",
+      x: mousePosition.x - 15,
+      y: mousePosition.y - 15,
+      height: 10,
+      width: 10,
+      backgroundColor: "rgb(255, 255, 255)",
+      border: "2px solid rgb(255, 255, 255)",
     },
   }
 
