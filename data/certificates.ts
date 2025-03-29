@@ -2,6 +2,21 @@ import { Certificate } from "@/types"
 
 export const certificates: Certificate[] = [
   {
+    title: "Generative AI in Action",
+    issuedBy: "IBM SkillsBuild",
+    issuedDate: "2025-03-28", // From your certificate
+    image: "/certificates/ibm-generative-ai.png", // Save your certificate image with this name
+    skills: [
+      "Generative AI",
+      "Artificial Intelligence",
+      "Machine Learning",
+      "AI Applications",
+      "IBM Technologies"
+    ],
+    description: "Successfully completed IBM's comprehensive course on Generative AI, covering practical applications and implementation of generative artificial intelligence technologies.",
+    verificationUrl: "https://www.credly.com/badges/ab0e0381-8bf2-43a0-94a9-d94a5e5f6ad1" // From your certificate QR code
+  },
+  {
     title: "AI for Entrepreneurship",
     issuedBy: "Intel & NITI Aayog",
     issuedDate: "2025-03-26", // March 26, 2025 from certificate
